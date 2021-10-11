@@ -38,8 +38,7 @@ namespace testAPI.Controllers.Api
 
             if (hash != user.HashPassword)
                 throw new UnauthorizedException(user);
-
-            return $"{user.GenerationToken()}.{user.Id}";
+            return $"{user.GenerationToken()}";
         }
     }
 }

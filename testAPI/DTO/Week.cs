@@ -1,4 +1,4 @@
-﻿namespace testAPI.Helpers
+﻿namespace testAPI.DTO
 {
     public class Week
     {

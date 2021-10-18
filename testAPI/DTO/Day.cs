@@ -1,8 +1,8 @@
-﻿namespace testAPI.Helpers
+﻿namespace testAPI.DTO
 {
     public class Day
     {
-        public string Name { get; set; }
+        public int Number { get; set; }
 
         public Lesson[] Lessons { get; set; }
     }

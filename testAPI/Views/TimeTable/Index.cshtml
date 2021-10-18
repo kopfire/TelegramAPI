@@ -1,0 +1,116 @@
+﻿@model TelegramAPI.Models.IndexViewModel
+
+@{
+    ViewData["Title"] = "Список товаров";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<form asp-action="TimeTable" asp-controller="TimeTable">
+    <section class="page-content">
+        <form role="form">
+            <div class="form-group">
+                <h4>ПОИСК ПО ГРУППЕ</h4>
+                <input class="form-control">
+            </div>
+        </form>
+        <form>
+            <label for="fname">ПОЛЕ 1:</label><br>
+            <input type="text" id="fname" name="fname"><br>
+            <label for="lname">ПОЛЕ 2:</label><br>
+            <input type="text" id="lname" name="lname">
+
+
+        </form>
+
+        <form>
+            <label for="fname">ПОЛЕ 3:</label><br>
+            <input type="text" id="fname" name="fname"><br>
+            <label for="lname">ПОЛЕ 4:</label><br>
+            <input type="text" id="lname" name="lname">
+
+
+        </form>
+
+        <form>
+            <label for="fname">ПОЛЕ 5:</label><br>
+            <input type="text" id="fname" name="fname"><br>
+            <label for="lname">ПОЛЕ 6:</label><br>
+            <input type="text" id="lname" name="lname">
+
+
+        </form>
+
+        <form>
+            <label for="fname">ПОЛЕ 7:</label><br>
+            <input type="text" id="fname" name="fname"><br>
+
+
+        </form>
+
+        <table id="dtMaterialDesignExample" class="table table-striped" cellspacing="0" width="100%">
+            <thead>
+                <tr>
+                    <th class="th-sm">
+                        ПАРА
+                    </th>
+                    <th class="th-sm">
+                        ПОНЕДЕЛЬНИК
+                    </th>
+                    <th class="th-sm">
+                        ВТОРНИК
+                    </th>
+                    <th class="th-sm">
+                        СРЕДА
+                    </th>
+                    <th class="th-sm">
+                        ЧЕТВЕРГ
+                    </th>
+                    <th class="th-sm">
+                        ПЯТНИЦА
+                    </th>
+                    <th class="th-sm">
+                        СУББОТА
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.TimeTables)
+                {
+                int count = 1;
+
+                @foreach (var week in item.Weeks)
+                {
+                @if (week.Number == 1){
+
+                @for(int i = 1; i < 8; i++){
+                <tr>
+                    <td class="th-sm">
+                        @i
+                    </td>
+                    @foreach (var day in week.Days)
+                    {
+                    var lol = "";
+                    @foreach (var lesson in day.Lessons)
+                    {
+                    @if (lesson.Number == i){
+                    lol = @lesson.Name;
+                    }
+
+                    }
+                    <td class="th-sm">
+                        @lol
+                    </td>
+                    }
+                </tr>
+                    }
+                
+                }
+                }
+
+
+
+                }
+            </tbody>
+</section>
+</form>

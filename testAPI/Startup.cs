@@ -3,8 +3,8 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using TelegramAPI.Models;
 using testAPI.Attributes;
-using testAPI.Helpers;
 using testAPI.Options;
 using testAPI.Repositories;
 using testAPI.Repositories.Impl;
@@ -26,7 +26,9 @@ namespace testAPI
 
             services.AddSingleton<IStudentRepository, StudentRepositoryInMemory>();
             services.AddSingleton<IUserRepository, UserRepositoryInMemory>();
-            
+
+            services.AddTransient<TimeTableService>();
+            services.AddControllersWithViews();
 
             services.AddMvc(options =>
             {

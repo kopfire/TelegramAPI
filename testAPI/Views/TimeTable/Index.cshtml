@@ -75,11 +75,9 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach (var item in Model.TimeTables)
-                {
                 int count = 1;
 
-                @foreach (var week in item.Weeks)
+                @foreach (var week in Model.TimeTables.Weeks)
                 {
                 @if (week.Number == 1){
 
@@ -103,14 +101,14 @@
                     </td>
                     }
                 </tr>
-                    }
+                }
+
+                }
+                }
+
+
+
                 
-                }
-                }
-
-
-
-                }
             </tbody>
 </section>
 </form>

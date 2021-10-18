@@ -4,6 +4,6 @@ namespace TelegramAPI.Models
 {
     public class IndexViewModel
     {
-        public IEnumerable<TimeTable> TimeTables { get; set; }
+        public TimeTables TimeTables { get; set; }
     }
 }

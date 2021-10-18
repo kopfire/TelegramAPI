@@ -7,7 +7,7 @@ using testAPI.DTO;
 
 namespace TelegramAPI.Models
 {
-    public class TimeTable
+    public class Groups
     {
         [BsonRepresentation(BsonType.ObjectId)]
         public string Id { get; set; }
@@ -15,7 +15,7 @@ namespace TelegramAPI.Models
         [Display(Name = "Группа")]
         public string Group { get; set; }
 
-        [Display(Name = "Недели")]
-        public Week[] Weeks { get; set; }
+        [Display(Name = "Студенты")]
+        public BsonArray[] Students { get; set; }
     }
 }

@@ -11,14 +11,15 @@ namespace testAPI.Controllers
 
     public class TimeTableController : Controller
     {
-        private readonly TimeTableService db;
-        public TimeTableController(TimeTableService context)
+        private readonly TimeTablesService db;
+        public TimeTableController(TimeTablesService context)
         {
             db = context;
         }
         public async Task<IActionResult> Index()
         {
-            var timeTables = await db.GetTimeTable();
+            var timeTables = await db.GetTimeTable("ДИТ311");
+            Console.WriteLine(timeTables);
             var model = new IndexViewModel { TimeTables = timeTables };
             return View(model);
         }
@@ -28,7 +29,7 @@ namespace testAPI.Controllers
             return View();
         }
         [HttpPost]
-        public async Task<IActionResult> Create(TimeTable p)
+        public async Task<IActionResult> Create(TimeTables p)
         {
             if (ModelState.IsValid)
             {

@@ -27,7 +27,8 @@ namespace testAPI
             services.AddSingleton<IStudentRepository, StudentRepositoryInMemory>();
             services.AddSingleton<IUserRepository, UserRepositoryInMemory>();
 
-            services.AddTransient<TimeTableService>();
+            services.AddTransient<TimeTablesService>();
+            services.AddTransient<GroupsService>();
             services.AddControllersWithViews();
 
             services.AddMvc(options =>

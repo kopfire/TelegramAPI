@@ -11,7 +11,9 @@ using MongoDB.Bson.Serialization;
 using System.Configuration;
 using testAPI.DTO;
 using TelegramAPI.Models;
-using TimeTable = TelegramAPI.Models.TimeTable;
+using TimeTable = TelegramAPI.Models.TimeTables;
+using TelegramAPI.DTO;
+using System.Net.Http;
 
 namespace testAPI.Controllers.Api
 {
@@ -26,11 +28,13 @@ namespace testAPI.Controllers.Api
     public class MessageController : ControllerBase
     {
 
-        private readonly TimeTableService db;
+        private readonly TimeTablesService TimeTablesDB;
+        private readonly GroupsService GroupsDB;
 
-        public MessageController(TimeTableService context)
+        public MessageController(TimeTablesService context, GroupsService context2)
         {
-            db = context;
+            TimeTablesDB = context;
+            GroupsDB = context2;
         }
 
         /// <summary>
@@ -40,21 +44,17 @@ namespace testAPI.Controllers.Api
         [HttpPost("message")]
         public async Task<string> AdoptionMessageAsync(string data)
         {
+            Console.WriteLine(1);
+            Console.WriteLine(data);
             var options = new JsonSerializerOptions
             {
                 Encoder = JavaScriptEncoder.Create(UnicodeRanges.BasicLatin, UnicodeRanges.Cyrillic),
                 WriteIndented = true
             };
+            var timeTables = await TimeTablesDB.GetTimeTable("ДИТ311");
 
-            var timeTables = await db.GetTimeTable();
-
-            TimeTable lol = null;
-
-            foreach (var item in timeTables)
-            {
-                lol = item;
-            }
-            var jsonString = JsonSerializer.Serialize(lol, options);
+           
+            var jsonString = JsonSerializer.Serialize(timeTables, options);
             return $"{jsonString}";
         }
     }

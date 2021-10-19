@@ -28,12 +28,10 @@ namespace testAPI.Controllers.Api
     {
 
         private readonly TimeTablesService TimeTablesDB;
-        private readonly GroupsService GroupsDB;
 
-        public MessageController(TimeTablesService context, GroupsService context2)
+        public MessageController(TimeTablesService context)
         {
             TimeTablesDB = context;
-            GroupsDB = context2;
         }
 
         /// <summary>
@@ -41,19 +39,20 @@ namespace testAPI.Controllers.Api
         /// </summary>
         /// <param name="data">Данные пользователя</param>
         [HttpPost("message")]
-        public async Task<string> AdoptionMessageAsync([FromBody] dfh data)
+        public async Task<string> AdoptionMessageAsync([FromBody] MessageInputDTO data)
         {
-            Console.WriteLine(1);
-            Console.WriteLine(data.User);
             var options = new JsonSerializerOptions
             {
                 Encoder = JavaScriptEncoder.Create(UnicodeRanges.BasicLatin, UnicodeRanges.Cyrillic),
                 WriteIndented = true
             };
-            var timeTables = await TimeTablesDB.GetTimeTable("ДИТ311");
 
-           
+            TimeTables timeTables = await TimeTablesDB.GetTimeTable(data.User);
+
             var jsonString = JsonSerializer.Serialize(timeTables, options);
+            Console.WriteLine(jsonString);
+            Console.WriteLine(data.User);
+            Console.WriteLine(data.Command);
             return $"{jsonString}";
         }
     }

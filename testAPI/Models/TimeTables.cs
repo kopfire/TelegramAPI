@@ -1,6 +1,7 @@
 ﻿using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 using MongoDB.Driver;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Configuration;
 using testAPI.DTO;
@@ -17,5 +18,8 @@ namespace TelegramAPI.Models
 
         [Display(Name = "Недели")]
         public Week[] Weeks { get; set; }
+
+        [Display(Name = "Студенты")]
+        public List<long> Students { get; set; }
     }
 }

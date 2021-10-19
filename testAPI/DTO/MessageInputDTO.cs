@@ -2,10 +2,18 @@
 
 namespace testAPI.DTO
 {
-    class afaf
+    /// <summary>
+    /// Данные для логина
+    /// </summary>
+    public class MessageInputDTO
     {
+        /// <summary>
+        /// Логин
+        /// </summary>
         [Required]
         public string Command { get; set; }
+
+
         [Required]
         public long User { get; set; }
     }

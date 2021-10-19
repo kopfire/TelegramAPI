@@ -1,8 +1,6 @@
 ﻿@model TelegramAPI.Models.IndexViewModel
 
-@{
-    ViewData["Title"] = "Список товаров";
-}
+
 
 <h2>@ViewData["Title"]</h2>
 
@@ -75,40 +73,37 @@
                 </tr>
             </thead>
             <tbody>
-                int count = 1;
+                <!--int count = 1;-->
 
                 @foreach (var week in Model.TimeTables.Weeks)
                 {
-                @if (week.Number == 1){
-
-                @for(int i = 1; i < 8; i++){
-                <tr>
-                    <td class="th-sm">
-                        @i
-                    </td>
-                    @foreach (var day in week.Days)
+                    @if (week.Number == 1)
                     {
-                    var lol = "";
-                    @foreach (var lesson in day.Lessons)
-                    {
-                    @if (lesson.Number == i){
-                    lol = @lesson.Name;
+
+                        @for (int i = 1; i < 8; i++)
+                        {
+                            <tr>
+                                <td class="th-sm">
+                                    @i
+                                </td>
+                                @foreach (var day in week.Days)
+                                {
+                                    var lol = "";
+                                    @foreach (var lesson in day.Lessons)
+                                    {
+                                        @if (lesson.Number == i)
+                                        {
+                                            lol = @lesson.Name;
+                                        }
+                                    }
+                                    <td class="th-sm">
+                                        @lol
+                                    </td>
+                                }
+                            </tr>
+                        }
                     }
-
-                    }
-                    <td class="th-sm">
-                        @lol
-                    </td>
-                    }
-                </tr>
                 }
-
-                }
-                }
-
-
-
-                
             </tbody>
-</section>
-</form>
+    </section>
+ </form>

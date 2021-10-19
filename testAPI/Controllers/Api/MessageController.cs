@@ -12,7 +12,6 @@ using System.Configuration;
 using testAPI.DTO;
 using TelegramAPI.Models;
 using TimeTable = TelegramAPI.Models.TimeTables;
-using TelegramAPI.DTO;
 using System.Net.Http;
 
 namespace testAPI.Controllers.Api
@@ -42,10 +41,10 @@ namespace testAPI.Controllers.Api
         /// </summary>
         /// <param name="data">Данные пользователя</param>
         [HttpPost("message")]
-        public async Task<string> AdoptionMessageAsync(string data)
+        public async Task<string> AdoptionMessageAsync([FromBody] dfh data)
         {
             Console.WriteLine(1);
-            Console.WriteLine(data);
+            Console.WriteLine(data.User);
             var options = new JsonSerializerOptions
             {
                 Encoder = JavaScriptEncoder.Create(UnicodeRanges.BasicLatin, UnicodeRanges.Cyrillic),

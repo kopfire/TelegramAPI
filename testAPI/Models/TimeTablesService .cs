@@ -31,7 +31,7 @@ namespace TelegramAPI.Models
 
         public async Task<TimeTables> GetTimeTable(string group)
         {
-            return await TimeTables.Find(new BsonDocument("Group", group)).FirstOrDefaultAsync();
+            return await TimeTables.FindAsync(new BsonDocument("Group", group)).Result.FirstOrDefaultAsync();
         }
 
         /// получаем один документ по id
@@ -41,7 +41,7 @@ namespace TelegramAPI.Models
             var filter = Builders<TimeTables>.Filter.AnyEq(x => x.Students,  id );
 
             Console.WriteLine("OK2");
-            return await TimeTables.Find(filter).FirstOrDefaultAsync();
+            return await TimeTables.FindAsync(filter).Result.FirstOrDefaultAsync();
         }
         /// добавление документа
         public async Task Create(TimeTables p)

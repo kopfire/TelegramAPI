@@ -5,9 +5,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using TelegramAPI.Models;
 using testAPI.Attributes;
-using testAPI.Options;
-using testAPI.Repositories;
-using testAPI.Repositories.Impl;
 
 namespace testAPI
 {
@@ -21,11 +18,6 @@ namespace testAPI
         public IConfiguration Configuration { get; }
         public void ConfigureServices(IServiceCollection services)
         {
-            services.Configure<BasicAuthKeyOptions>(Configuration.GetSection("BasicAuthKey"));
-
-
-            services.AddSingleton<IStudentRepository, StudentRepositoryInMemory>();
-            services.AddSingleton<IUserRepository, UserRepositoryInMemory>();
 
             services.AddTransient<TimeTablesService>();
             services.AddControllersWithViews();

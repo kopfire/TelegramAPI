@@ -13,6 +13,9 @@ namespace TelegramAPI.Models
         [BsonRepresentation(BsonType.ObjectId)]
         public string Id { get; set; }
 
+        [BsonRepresentation(BsonType.ObjectId)]
+        public string Speciality { get; set; }
+
         [Display(Name = "Группа")]
         public string Group { get; set; }
 

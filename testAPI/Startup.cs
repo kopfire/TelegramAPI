@@ -3,7 +3,8 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using TelegramAPI.Models;
+using TelegramAPI.Repository;
+using TelegramAPI.Repository.Impl;
 using testAPI.Attributes;
 
 namespace testAPI
@@ -19,7 +20,7 @@ namespace testAPI
         public void ConfigureServices(IServiceCollection services)
         {
 
-            services.AddTransient<TimeTablesService>();
+            services.AddScoped<ITimeTableRepository, TimeTablesRepository>();
             services.AddControllersWithViews();
 
             services.AddMvc(options =>

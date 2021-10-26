@@ -13,6 +13,7 @@ using testAPI.DTO;
 using TelegramAPI.Models;
 using TimeTable = TelegramAPI.Models.TimeTables;
 using System.Net.Http;
+using TelegramAPI.Repository;
 
 namespace testAPI.Controllers.Api
 {
@@ -27,33 +28,22 @@ namespace testAPI.Controllers.Api
     public class MessageController : ControllerBase
     {
 
-        private readonly TimeTablesService TimeTablesDB;
+        private readonly ITimeTableRepository _timeTableService;
 
-        public MessageController(TimeTablesService context)
+        public MessageController(ITimeTableRepository timeTableService)
         {
-            TimeTablesDB = context;
+            _timeTableService = timeTableService;
         }
 
         /// <summary>
         /// Логин
         /// </summary>
         /// <param name="data">Данные пользователя</param>
-        [HttpPost("message")]
-        public async Task<string> AdoptionMessageAsync([FromBody] MessageInputDTO data)
+        [HttpGet("message")]
+        public async Task<IActionResult> AdoptionMessageAsync([FromBody] MessageInputDTO data)
         {
-            var options = new JsonSerializerOptions
-            {
-                Encoder = JavaScriptEncoder.Create(UnicodeRanges.BasicLatin, UnicodeRanges.Cyrillic),
-                WriteIndented = true
-            };
-
-            TimeTables timeTables = await TimeTablesDB.GetTimeTable(data.User);
-
-            var jsonString = JsonSerializer.Serialize(timeTables, options);
-            Console.WriteLine(jsonString);
-            Console.WriteLine(data.User);
-            Console.WriteLine(data.Command);
-            return $"{jsonString}";
+            TimeTables timeTables = await _timeTableService.GetTimeTable(data.User);
+            return Ok(timeTables);
         }
     }
 }

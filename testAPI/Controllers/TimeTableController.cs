@@ -4,6 +4,7 @@ using System;
 using System.Diagnostics;
 using System.Threading.Tasks;
 using TelegramAPI.Models;
+using TelegramAPI.Repository;
 using testAPI.Models;
 
 namespace testAPI.Controllers
@@ -11,8 +12,8 @@ namespace testAPI.Controllers
 
     public class TimeTableController : Controller
     {
-        private readonly TimeTablesService db;
-        public TimeTableController(TimeTablesService context)
+        private readonly ITimeTableRepository db;
+        public TimeTableController(ITimeTableRepository context)
         {
             db = context;
         }
@@ -28,6 +29,16 @@ namespace testAPI.Controllers
         {
             return View();
         }
+
+        public async Task<IActionResult> GetGroup(string group)
+        {
+            var timeTables = await db.GetTimeTable(group);
+            Console.WriteLine("кнопка");
+
+            var model = new IndexViewModel { TimeTables = timeTables };
+            return View(model);
+        }
+
         [HttpPost]
         public async Task<IActionResult> Create(TimeTables p)
         {

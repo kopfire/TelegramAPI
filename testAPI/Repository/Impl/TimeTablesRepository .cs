@@ -12,7 +12,6 @@ namespace TelegramAPI.Repository.Impl
     /// <inheritdoc/>
     public class TimeTablesRepository : ITimeTableRepository
     {
-        IGridFSBucket gridFS;   /// файловое хранилище
         IMongoCollection<TimeTables> TimeTables; /// коллекция в базе данных
         public TimeTablesRepository()
         {
@@ -23,14 +22,11 @@ namespace TelegramAPI.Repository.Impl
             MongoClient client = new MongoClient(connectionString);
             /// получаем доступ к самой базе данных
             IMongoDatabase database = client.GetDatabase("Telegram");
-            /// получаем доступ к файловому хранилищу
-            gridFS = new GridFSBucket(database);
             /// обращаемся к коллекции TimeTable
             TimeTables = database.GetCollection<TimeTables>("TimeTables");
         }
 
         /// <inheritdoc/>
-
         public async Task<TimeTables> GetTimeTable(string group)
         {
             return await TimeTables.FindAsync(new BsonDocument("Group", group)).Result.FirstOrDefaultAsync();

@@ -32,6 +32,5 @@ namespace testAPI.Helpers
             }
             return stringBuilder.ToString();
         }
-
     }
 }

@@ -7,6 +7,7 @@ namespace testAPI.Controllers
 {
     public class UsersController : Controller
     {
+
         private readonly ILogger<UsersController> _logger;
 
         public UsersController(ILogger<UsersController> logger)

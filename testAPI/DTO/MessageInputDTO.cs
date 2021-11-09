@@ -3,17 +3,19 @@
 namespace testAPI.DTO
 {
     /// <summary>
-    /// Данные для логина
+    /// Данные для получения расписания из бд
     /// </summary>
     public class MessageInputDTO
     {
         /// <summary>
-        /// Логин
+        /// Команда
         /// </summary>
         [Required]
         public string Command { get; set; }
 
-
+        /// <summary>
+        /// Id пользователя
+        /// </summary>
         [Required]
         public long User { get; set; }
     }

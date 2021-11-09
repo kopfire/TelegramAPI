@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using TelegramAPI.Models;
 
 namespace TelegramAPI.Repository
@@ -17,28 +14,28 @@ namespace TelegramAPI.Repository
         /// </summary>
         /// <param name="id">Идентификатор студента</param>
         /// <returns></returns>
-        public Task<TimeTables> GetTimeTable(long id);
+        public Task<TimeTable> GetTimeTable(long id);
 
         /// <summary>
         /// Получаем один документ по группе
         /// </summary>
         /// <param name="id">Название группы</param>
         /// <returns></returns>
-        public Task<TimeTables> GetTimeTable(string group);
+        public Task<TimeTable> GetTimeTable(string group);
 
         /// <summary>
         /// Добавление документа
         /// </summary>
         /// <param name="timeTables"></param>
         /// <returns></returns>
-        public Task Create(TimeTables timeTables);
+        public Task Create(TimeTable timeTables);
 
         /// <summary>
         /// Обновление документа
         /// </summary>
         /// <param name="timeTables"></param>
         /// <returns></returns>
-        public Task Update(TimeTables timeTables); 
+        public Task Update(TimeTable timeTables); 
 
         /// <summary>
         /// Удаление документа

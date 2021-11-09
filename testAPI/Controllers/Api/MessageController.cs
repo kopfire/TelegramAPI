@@ -1,25 +1,12 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using MongoDB.Bson;
-using MongoDB.Driver;
 using System;
-using System.Text.Encodings.Web;
-using System.Text.Json;
-using System.Text.Unicode;
 using System.Threading.Tasks;
-using testAPI.Helpers;
-using MongoDB.Bson.Serialization;
-using System.Configuration;
 using testAPI.DTO;
 using TelegramAPI.Models;
-using TimeTable = TelegramAPI.Models.TimeTables;
-using System.Net.Http;
 using TelegramAPI.Repository;
 
 namespace testAPI.Controllers.Api
 {
-
-
-
     /// <summary>
     /// Контроллер для принятия сообщений из бота
     /// </summary>
@@ -36,13 +23,15 @@ namespace testAPI.Controllers.Api
         }
 
         /// <summary>
-        /// Логин
+        /// Получение расписания
         /// </summary>
-        /// <param name="data">Данные пользователя</param>
+        /// <param name="data">JSON файл с сообщением и id пользователя</param>
+        /// <returns>Расписание</returns>
         [HttpGet("message")]
         public async Task<IActionResult> AdoptionMessageAsync([FromBody] MessageInputDTO data)
         {
-            TimeTables timeTables = await _timeTableService.GetTimeTable(data.User);
+            Console.WriteLine(data);
+            TimeTable timeTables = await _timeTableService.GetTimeTable(data.User);
             return Ok(timeTables);
         }
     }

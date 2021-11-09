@@ -1,9 +1,7 @@
-﻿using System.Collections.Generic;
- 
-namespace TelegramAPI.Models
+﻿namespace TelegramAPI.Models
 {
     public class IndexViewModel
     {
-        public TimeTables TimeTables { get; set; }
+        public TimeTable TimeTables { get; set; }
     }
 }

@@ -1,25 +1,24 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 using System;
-using System.Diagnostics;
 using System.Threading.Tasks;
 using TelegramAPI.Models;
 using TelegramAPI.Repository;
-using testAPI.Models;
 
 namespace testAPI.Controllers
 {
-
     public class TimeTableController : Controller
     {
-        private readonly ITimeTableRepository db;
+
+        private readonly ITimeTableRepository _timeTableService;
+
         public TimeTableController(ITimeTableRepository context)
         {
-            db = context;
+            _timeTableService = context;
         }
+
         public async Task<IActionResult> Index()
         {
-            var timeTables = await db.GetTimeTable("ДИТ311");
+            var timeTables = await _timeTableService.GetTimeTable("ДИТ311");
             Console.WriteLine(timeTables);
             var model = new IndexViewModel { TimeTables = timeTables };
             return View(model);
@@ -32,7 +31,7 @@ namespace testAPI.Controllers
 
         public async Task<IActionResult> GetGroup(string group)
         {
-            var timeTables = await db.GetTimeTable(group);
+            var timeTables = await _timeTableService.GetTimeTable(group);
             Console.WriteLine("кнопка");
 
             var model = new IndexViewModel { TimeTables = timeTables };
@@ -40,11 +39,11 @@ namespace testAPI.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(TimeTables p)
+        public async Task<IActionResult> Create(TimeTable p)
         {
             if (ModelState.IsValid)
             {
-                await db.Create(p);
+                await _timeTableService.Create(p);
                 return RedirectToAction("TimeTable");
             }
             return View(p);

@@ -1,9 +1,5 @@
 ﻿using MongoDB.Bson;
 using MongoDB.Driver;
-using MongoDB.Driver.GridFS;
-using System;
-using System.Collections.Generic;
-using System.IO;
 using System.Threading.Tasks;
 using TelegramAPI.Models;
 
@@ -12,41 +8,37 @@ namespace TelegramAPI.Repository.Impl
     /// <inheritdoc/>
     public class TimeTablesRepository : ITimeTableRepository
     {
-        IMongoCollection<TimeTables> TimeTables; /// коллекция в базе данных
+
+        IMongoCollection<TimeTable> TimeTables;
+
         public TimeTablesRepository()
         {
-            /// строка подключения
-            string connectionString = "mongodb://localhost:27017";
-            var connection = new MongoUrlBuilder(connectionString);
-            /// получаем клиента для взаимодействия с базой данных
-            MongoClient client = new MongoClient(connectionString);
-            /// получаем доступ к самой базе данных
+            MongoClient client = new MongoClient("mongodb://localhost:27017");
             IMongoDatabase database = client.GetDatabase("Telegram");
-            /// обращаемся к коллекции TimeTable
-            TimeTables = database.GetCollection<TimeTables>("TimeTables");
+            TimeTables = database.GetCollection<TimeTable>("TimeTables");
         }
 
         /// <inheritdoc/>
-        public async Task<TimeTables> GetTimeTable(string group)
+        public async Task<TimeTable> GetTimeTable(string group)
         {
             return await TimeTables.FindAsync(new BsonDocument("Group", group)).Result.FirstOrDefaultAsync();
         }
 
         /// <inheritdoc/>
-        public async Task<TimeTables> GetTimeTable(long id)
+        public async Task<TimeTable> GetTimeTable(long id)
         {
-            var filter = Builders<TimeTables>.Filter.AnyEq(x => x.Students,  id );
+            var filter = Builders<TimeTable>.Filter.AnyEq(x => x.Students,  id );
             return await TimeTables.FindAsync(filter).Result.FirstOrDefaultAsync();
         }
 
         /// <inheritdoc/>
-        public async Task Create(TimeTables p)
+        public async Task Create(TimeTable p)
         {
             await TimeTables.InsertOneAsync(p);
         }
 
         /// <inheritdoc/>
-        public async Task Update(TimeTables p)
+        public async Task Update(TimeTable p)
         {
             await TimeTables.ReplaceOneAsync(new BsonDocument("_id", new ObjectId(p.Id)), p);
         }

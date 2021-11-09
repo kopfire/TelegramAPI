@@ -8,8 +8,7 @@ namespace TelegramAPI.Repository.Impl
     /// <inheritdoc/>
     public class TimeTablesRepository : ITimeTableRepository
     {
-
-        IMongoCollection<TimeTable> TimeTables;
+        private readonly IMongoCollection<TimeTable> TimeTables;
 
         public TimeTablesRepository()
         {

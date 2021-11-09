@@ -25,13 +25,12 @@ namespace testAPI.Controllers.Api
         /// <summary>
         /// Получение расписания
         /// </summary>
-        /// <param name="data">JSON файл с сообщением и id пользователя</param>
+        /// <param name="UserID">Идентификатор пользователя</param>
         /// <returns>Расписание</returns>
         [HttpGet("message")]
-        public async Task<IActionResult> AdoptionMessageAsync([FromBody] MessageInputDTO data)
+        public async Task<IActionResult> AdoptionMessageAsync(long UserID)
         {
-            Console.WriteLine(data);
-            TimeTable timeTables = await _timeTableService.GetTimeTable(data.User);
+            TimeTable timeTables = await _timeTableService.GetTimeTable(UserID);
             return Ok(timeTables);
         }
     }

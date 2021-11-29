@@ -1,5 +1,6 @@
 ﻿using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using testAPI.DTO;
 
@@ -32,6 +33,6 @@ namespace TelegramAPI.Models
         /// Массив четной и нечетной недели
         /// </summary>
         [Display(Name = "Недели")]
-        public WeekDTO[] Weeks { get; set; }
+        public List<WeekDTO> Weeks { get; set; }
     }
 }

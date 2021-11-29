@@ -24,5 +24,10 @@
         /// Аудитория
         /// </summary>
         public string Audience { get; set; }
+
+        /// <summary>
+        /// Начало и конец пары
+        /// </summary>
+        public string Time { get; set; }
     }
 }

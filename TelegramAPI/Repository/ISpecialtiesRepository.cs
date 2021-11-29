@@ -21,7 +21,7 @@ namespace TelegramAPI.Repository
         /// </summary>
         /// <param name="specialties"></param>
         /// <returns></returns>
-        public Task Create(Specialties specialties);
+        public Task<string> Create(Specialties specialties);
 
         /// <summary>
         /// Обновление документа

@@ -25,9 +25,10 @@ namespace TelegramAPI.Repository.Impl
         }
 
         /// <inheritdoc/>
-        public async Task Create(Faculties faculties)
+        public async Task<string> Create(Faculties faculties)
         {
             await Faculties.InsertOneAsync(faculties);
+            return faculties.Id;
         }
 
         /// <inheritdoc/>

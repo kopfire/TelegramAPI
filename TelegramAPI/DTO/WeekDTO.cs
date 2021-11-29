@@ -1,4 +1,6 @@
-﻿namespace testAPI.DTO
+﻿using System.Collections.Generic;
+
+namespace testAPI.DTO
 {
     /// <summary>
     /// Данные недели
@@ -13,6 +15,6 @@
         /// <summary>
         /// Массив дней
         /// </summary>
-        public DayDTO[] Days { get; set; }
+        public List<DayDTO> Days { get; set; }
     }
 }

@@ -17,7 +17,6 @@ namespace Telegram
 {
     class Program
     {
-
         static void Main()
         {
             Dictionary<int, string> days = new(6);
@@ -195,10 +194,14 @@ namespace Telegram
                                     foreach (Lesson lesson in day.Lessons)
                                     {
                                         lol++;
-                                        responseMessage += "*" + lesson.Number + " пара*\n";
+                                        if (lesson.Number != -16)
+                                            responseMessage += "*" + lesson.Number + " пара(" + lesson.Time + ")*\n";
                                         responseMessage += lesson.Name + " - ";
                                         responseMessage += lesson.Teacher + "\nАудитория - ";
-                                        responseMessage += lesson.Audience + "\n\n";
+                                        if (lesson.Audience == "")
+                                            responseMessage += "ДОТ\n\n";
+                                        else
+                                            responseMessage += lesson.Audience + "\n\n";
                                     }
                                     if (lol != 0)
                                     {
@@ -239,13 +242,15 @@ namespace Telegram
                                         string responseMessage = "*Расписание на сегодня:\n\n*";
                                         foreach (Lesson lesson in day.Lessons)
                                         {
-
-                                            responseMessage += "*" + lesson.Number + " пара*\n";
+                                            if (lesson.Number != -16)
+                                                responseMessage += "*" + lesson.Number + " пара(" + lesson.Time + ")*\n";
                                             responseMessage += lesson.Name + " - ";
                                             responseMessage += lesson.Teacher + "\nАудитория - ";
-                                            responseMessage += lesson.Audience + "\n\n";
+                                            if (lesson.Audience == "")
+                                                responseMessage += "ДОТ\n\n";
+                                            else
+                                                responseMessage += lesson.Audience + "\n\n";
                                         }
-
                                         c = 1;
                                         await botClient.SendTextMessageAsync(parseMode: ParseMode.Markdown, chatId: chatId, text: responseMessage, replyMarkup: new ReplyKeyboardRemove(), cancellationToken: cancellationToken);
                                     }
@@ -287,13 +292,15 @@ namespace Telegram
                                         string responseMessage = "*Расписание на завтра:*\n\n";
                                         foreach (Lesson lesson in day.Lessons)
                                         {
-
-                                            responseMessage += "*" + lesson.Number + " пара*\n";
+                                            if (lesson.Number != -16)
+                                                responseMessage += "*" + lesson.Number + " пара(" + lesson.Time + ")*\n";
                                             responseMessage += lesson.Name + " - ";
                                             responseMessage += lesson.Teacher + "\nАудитория - ";
-                                            responseMessage += lesson.Audience + "\n\n";
+                                            if (lesson.Audience == "")
+                                                responseMessage += "ДОТ\n\n";
+                                            else
+                                                responseMessage += lesson.Audience + "\n\n";
                                         }
-
                                         c = 1;
                                         await botClient.SendTextMessageAsync(parseMode: ParseMode.Markdown, chatId: chatId, text: responseMessage, replyMarkup: new ReplyKeyboardRemove(), cancellationToken: cancellationToken);
                                     }

@@ -1,4 +1,6 @@
-﻿namespace testAPI.DTO
+﻿using System.Collections.Generic;
+
+namespace testAPI.DTO
 {
     /// <summary>
     /// Данные дня
@@ -13,6 +15,6 @@
         /// <summary>
         /// Массив пар
         /// </summary>
-        public LessonDTO[] Lessons { get; set; }
+        public List<LessonDTO> Lessons { get; set; }
     }
 }

@@ -1,9 +1,14 @@
+using Hangfire;
+using Hangfire.Mongo;
+using Hangfire.Mongo.Migration.Strategies;
+using Hangfire.Mongo.Migration.Strategies.Backup;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using MongoDB.Driver;
+using TelegramAPI.Helpers.Parser;
 using TelegramAPI.Repository;
 using TelegramAPI.Repository.Impl;
 using testAPI.Attributes;
@@ -31,8 +36,30 @@ namespace testAPI
             services.AddScoped<ITimeTableRepository, TimeTablesRepository>();
             services.AddScoped<IUniversitiesRepository, UniversitiesRepository>();
             services.AddScoped<IUsersRepository, UsersRepository>();
-            
 
+            // Add Hangfire services. Hangfire.AspNetCore nuget required
+            services.AddHangfire(configuration => configuration
+                .SetDataCompatibilityLevel(CompatibilityLevel.Version_170)
+                .UseSimpleAssemblyNameTypeSerializer()
+                .UseRecommendedSerializerSettings()
+                .UseMongoStorage(mongoClient, mongoUrlBuilder.DatabaseName, new MongoStorageOptions
+                {
+                    MigrationOptions = new MongoMigrationOptions
+                    {
+                        MigrationStrategy = new MigrateMongoMigrationStrategy(),
+                        BackupStrategy = new CollectionMongoBackupStrategy()
+                    },
+                    Prefix = "hangfire.mongo",
+                    CheckQueuedJobsStrategy = CheckQueuedJobsStrategy.TailNotificationsCollection,
+                    CheckConnection = true
+                    
+            })
+            );
+            // Add the processing server as IHostedService
+            services.AddHangfireServer(serverOptions =>
+            {
+                serverOptions.ServerName = "Hangfire.Mongo server 1";
+            });
 
 
             services.AddControllersWithViews();
@@ -41,9 +68,11 @@ namespace testAPI
             {
                 options.Filters.Add(typeof(ApiExceptionFilterAttribute));
             });
-
+            
             services.AddControllersWithViews();
         }
+
+        
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
@@ -69,6 +98,10 @@ namespace testAPI
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
             });
+            
+            app.UseHangfireDashboard();
+
+            RecurringJob.AddOrUpdate("easyjob", () => ASU.Pars(), "0 0 20 * * ?");
         }
     }
 }

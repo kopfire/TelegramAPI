@@ -1,13 +1,12 @@
 ﻿using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using testAPI.DTO;
 
 namespace TelegramAPI.Models
 {
     /// <summary>
-    /// Расписание
+    /// Расписания
     /// </summary>
     public class TimeTable
     {
@@ -34,11 +33,5 @@ namespace TelegramAPI.Models
         /// </summary>
         [Display(Name = "Недели")]
         public WeekDTO[] Weeks { get; set; }
-
-        /// <summary>
-        /// Массив студентов, принадлежащих этому расписанию
-        /// </summary>
-        [Display(Name = "Студенты")]
-        public List<long> Students { get; set; }
     }
 }

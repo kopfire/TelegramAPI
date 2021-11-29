@@ -8,7 +8,6 @@ namespace testAPI.Controllers
 {
     public class TimeTableController : Controller
     {
-
         private readonly ITimeTableRepository _timeTableService;
 
         public TimeTableController(ITimeTableRepository context)
@@ -18,7 +17,7 @@ namespace testAPI.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var timeTables = await _timeTableService.GetTimeTable("ДИТ311");
+            var timeTables = await _timeTableService.GetTimeTableByGroup("ДИНРБ_31/1");
             Console.WriteLine(timeTables);
             var model = new IndexViewModel { TimeTables = timeTables };
             return View(model);
@@ -31,7 +30,7 @@ namespace testAPI.Controllers
 
         public async Task<IActionResult> GetGroup(string group)
         {
-            var timeTables = await _timeTableService.GetTimeTable(group);
+            var timeTables = await _timeTableService.GetTimeTableByGroup(group);
             Console.WriteLine("кнопка");
 
             var model = new IndexViewModel { TimeTables = timeTables };

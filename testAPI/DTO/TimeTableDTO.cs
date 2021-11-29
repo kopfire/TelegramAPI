@@ -12,7 +12,7 @@ namespace testAPI.DTO
         /// Идентификатор расписания
         /// </summary>
         [BsonId]
-        public ObjectId _id { get; set; }
+        public ObjectId Id { get; set; }
 
         /// <summary>
         /// Название группы

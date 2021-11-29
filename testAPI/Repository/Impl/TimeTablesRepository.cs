@@ -12,34 +12,33 @@ namespace TelegramAPI.Repository.Impl
 
         public TimeTablesRepository()
         {
-            MongoClient client = new MongoClient("mongodb://localhost:27017");
+            MongoClient client = new("mongodb://localhost:27017");
             IMongoDatabase database = client.GetDatabase("Telegram");
             TimeTables = database.GetCollection<TimeTable>("TimeTables");
         }
 
         /// <inheritdoc/>
-        public async Task<TimeTable> GetTimeTable(string group)
+        public async Task<TimeTable> GetTimeTableByGroup(string group)
         {
             return await TimeTables.FindAsync(new BsonDocument("Group", group)).Result.FirstOrDefaultAsync();
         }
 
         /// <inheritdoc/>
-        public async Task<TimeTable> GetTimeTable(long id)
+        public async Task<TimeTable> GetTimeTable(string id)
         {
-            var filter = Builders<TimeTable>.Filter.AnyEq(x => x.Students,  id );
-            return await TimeTables.FindAsync(filter).Result.FirstOrDefaultAsync();
+            return await TimeTables.FindAsync(new BsonDocument("_id", new ObjectId(id))).Result.FirstOrDefaultAsync();
         }
 
         /// <inheritdoc/>
-        public async Task Create(TimeTable p)
+        public async Task Create(TimeTable timeTable)
         {
-            await TimeTables.InsertOneAsync(p);
+            await TimeTables.InsertOneAsync(timeTable);
         }
 
         /// <inheritdoc/>
-        public async Task Update(TimeTable p)
+        public async Task Update(TimeTable timeTable)
         {
-            await TimeTables.ReplaceOneAsync(new BsonDocument("_id", new ObjectId(p.Id)), p);
+            await TimeTables.ReplaceOneAsync(new BsonDocument("_id", new ObjectId(timeTable.Id)), timeTable);
         }
 
         /// <inheritdoc/>

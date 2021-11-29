@@ -8,20 +8,19 @@ namespace TelegramAPI.Repository
     /// </summary>
     public interface ITimeTableRepository
     {
-
         /// <summary>
-        /// Получаем один документ по id студента
-        /// </summary>
-        /// <param name="id">Идентификатор студента</param>
+        /// Получаем один документ по id 
+        /// /// </summary>
+        /// <param name="id">Идентификатор документа</param>
         /// <returns></returns>
-        public Task<TimeTable> GetTimeTable(long id);
+        public Task<TimeTable> GetTimeTable(string id);
 
         /// <summary>
         /// Получаем один документ по группе
         /// </summary>
-        /// <param name="id">Название группы</param>
+        /// <param name="group">Название группы</param>
         /// <returns></returns>
-        public Task<TimeTable> GetTimeTable(string group);
+        public Task<TimeTable> GetTimeTableByGroup(string group);
 
         /// <summary>
         /// Добавление документа

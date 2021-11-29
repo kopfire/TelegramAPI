@@ -18,10 +18,9 @@ namespace TelegramAPI.Repository.Impl
         }
 
         /// <inheritdoc/>
-        public async Task<string> GetTimeTable(long id)
+        public async Task<Users> Get(long id)
         {
-            var user = await Users.FindAsync(new BsonDocument("TelegramID", id)).Result.FirstOrDefaultAsync();
-            return user.Group;
+            return await Users.FindAsync(new BsonDocument("TelegramID", id)).Result.FirstOrDefaultAsync();
         }
 
         /// <inheritdoc/>

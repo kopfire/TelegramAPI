@@ -150,7 +150,7 @@ namespace Telegram
                         }
                         else if (array[0] == "6")
                         {
-                            var url = $"http://localhost:5000/api/telegram/users?TimeTablesID={array[2]}&UserID{update.CallbackQuery.Message.Chat.Id}";
+                            var url = $"http://localhost:5000/api/telegram/users?TimeTablesID={array[2]}&UserID={update.CallbackQuery.Message.Chat.Id}";
                             var client = new HttpClient();
                             await client.GetAsync(url, cancellationToken);
                             await botClient.EditMessageTextAsync(chatId: update.CallbackQuery.Message.Chat.Id, messageId: Int32.Parse(array[1]), text: "Вы успешно добавлены в базу данных!", cancellationToken: cancellationToken);
@@ -174,7 +174,7 @@ namespace Telegram
                     var response = await client.GetAsync(url + message.Chat.Id, cancellationToken);
                     int lol = 0;
                     var responseContent = await response.Content.ReadAsStringAsync(cancellationToken);
-                    if (responseContent != null)
+                    if (responseContent != "")
                     {
                         DateTime dayNow = DateTime.Today;
                         var cal = new GregorianCalendar();
@@ -220,7 +220,7 @@ namespace Telegram
                     var client = new HttpClient();
                     var response = await client.GetAsync(url + message.Chat.Id, cancellationToken);
                     var responseContent = await response.Content.ReadAsStringAsync(cancellationToken);
-                    if (responseContent != null)
+                    if (responseContent != "")
                     {
                         DateTime dayNow = DateTime.Today;
                         var cal = new GregorianCalendar();
@@ -268,7 +268,7 @@ namespace Telegram
                     var client = new HttpClient();
                     var response = await client.GetAsync(url + message.Chat.Id, cancellationToken);
                     var responseContent = await response.Content.ReadAsStringAsync(cancellationToken);
-                    if (responseContent != null)
+                    if (responseContent != "")
                     {
                         DateTime dayNow = DateTime.Today.AddDays(1);
                         var cal = new GregorianCalendar();

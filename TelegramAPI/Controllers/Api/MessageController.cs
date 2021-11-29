@@ -46,8 +46,14 @@ namespace testAPI.Controllers.Api
         [HttpGet("message")]
         public async Task<IActionResult> AdoptionMessageAsync(long UserID)
         {
-            var timeTables = await _timeTableService.GetTimeTable(_usersService.GetTimeTable(UserID).Result);
-            return Ok(timeTables);
+            var users = await _usersService.Get(UserID);
+            if (users != null)
+            {
+                var timeTables = await _timeTableService.GetTimeTable(users.Group);
+                return Ok(timeTables);
+            }
+            return Ok(null);
+            
         }
 
         /// <summary>
@@ -119,6 +125,26 @@ namespace testAPI.Controllers.Api
         {
             var timeTables = await _timeTableService.GetTimeTables(SpecialtiesID);
             return Ok(timeTables);
+        }
+
+        /// <summary>
+        /// Добавление связи 
+        /// </summary>
+        /// <param name="TimeTablesID">Идентификатор расписания</param>
+        /// <param name="UserID">Идентификатор пользователя в Telegram</param>
+        /// <returns></returns>
+        [HttpGet("users")]
+        public async Task<IActionResult> AdoptionUsersAsync(string TimeTablesID, long UserID)
+        {
+            var users = await _usersService.Get(UserID);
+            if (users != null)
+            {
+                users.Group = TimeTablesID;
+                await _usersService.Update(users);
+            }
+            else
+                await _usersService.Create(new Users { Group = TimeTablesID, TelegramID = UserID });
+            return Ok();
         }
     }
 }

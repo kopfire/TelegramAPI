@@ -8,12 +8,6 @@ namespace TelegramAPI.Repository
     /// </summary>
     public interface IUsersRepository
     {
-        /// <summary>
-        /// Получаем один документ по id студента
-        /// </summary>
-        /// <param name="id">Идентификатор студента</param>
-        /// <returns></returns>
-        public Task<string> GetTimeTable(long id);
 
         /// <summary>
         /// Добавление документа
@@ -21,6 +15,13 @@ namespace TelegramAPI.Repository
         /// <param name="users"></param>
         /// <returns></returns>
         public Task Create(Users users);
+
+        /// <summary>
+        /// Получение документа по TelegramID
+        /// </summary>
+        /// <param name="users"></param>
+        /// <returns></returns>
+        public Task<Users> Get(long id);
 
         /// <summary>
         /// Обновление документа

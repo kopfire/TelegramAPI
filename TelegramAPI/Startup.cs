@@ -24,10 +24,16 @@ namespace testAPI
             var mongoUrlBuilder = new MongoUrlBuilder("mongodb://localhost:27017/Telegram");
             var mongoClient = new MongoClient(mongoUrlBuilder.ToMongoUrl());
 
-            services.AddScoped<ITimeTableRepository, TimeTablesRepository>();
-            services.AddScoped<IUsersRepository, UsersRepository>();
             services.AddScoped<ICitiesRepository, CitiesRepository>();
-            services.AddScoped<ICountriesRepository, CountriesRepository>(); 
+            services.AddScoped<ICountriesRepository, CountriesRepository>();
+            services.AddScoped<IFacultiesRepository, FacultiesRepository>();
+            services.AddScoped<ISpecialtiesRepository, SpecialtiesRepository>();
+            services.AddScoped<ITimeTableRepository, TimeTablesRepository>();
+            services.AddScoped<IUniversitiesRepository, UniversitiesRepository>();
+            services.AddScoped<IUsersRepository, UsersRepository>();
+            
+
+
 
             services.AddControllersWithViews();
 

@@ -5,26 +5,26 @@ using System.ComponentModel.DataAnnotations;
 namespace TelegramAPI.Models
 {
     /// <summary>
-    /// Города
+    /// Специальности
     /// </summary>
-    public class Cities
+    public class Specialties
     {
         /// <summary>
-        /// Идентификатор города
+        /// Идентификатор специальности
         /// </summary>
         [BsonRepresentation(BsonType.ObjectId)]
         public string Id { get; set; }
 
         /// <summary>
-        /// Идентификатор страны, к которой принадлежит город
+        /// Идентификатор факультета, к которому принадлежит специальность
         /// </summary>
         [BsonRepresentation(BsonType.ObjectId)]
-        public string Country { get; set; }
+        public string Facylty { get; set; }
 
         /// <summary>
-        /// Название города
+        /// Название специальности
         /// </summary>
-        [Display(Name = "Город")]
+        [Display(Name = "Специальность")]
         public string Name { get; set; }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using MongoDB.Bson;
 using MongoDB.Driver;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using TelegramAPI.Models;
 
@@ -15,6 +16,11 @@ namespace TelegramAPI.Repository.Impl
             MongoClient client = new("mongodb://localhost:27017");
             IMongoDatabase database = client.GetDatabase("Telegram");
             TimeTables = database.GetCollection<TimeTable>("TimeTables");
+        }
+
+        public async Task<IEnumerable<TimeTable>> GetTimeTables(string id)
+        {
+            return await TimeTables.Find(new BsonDocument("Speciality", new ObjectId(id))).ToListAsync();
         }
 
         /// <inheritdoc/>

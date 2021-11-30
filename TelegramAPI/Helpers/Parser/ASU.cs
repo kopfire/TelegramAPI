@@ -133,7 +133,7 @@ namespace TelegramAPI.Helpers.Parser
                                                     Name = znamen.QuerySelectorAll("span.naz_disc")[0].InnerHtml,
                                                     Teacher = znamen.QuerySelectorAll("a.segueTeacher").Length != 0
                                                     ? znamen.QuerySelectorAll("a.segueTeacher")[0].InnerHtml : "",
-                                                    Time = time,
+                                                    Time = time.Replace("<br>", "-"),
                                                     Number = para
                                                 });
                                             }

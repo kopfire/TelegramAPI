@@ -15,13 +15,9 @@ namespace TelegramAPI.Helpers.Parser
 {
     public class ASU
     {
-        private static readonly ICitiesRepository _citiesService = new CitiesRepository();
-        private static readonly ICountriesRepository _countriesService = new CountriesRepository();
         private static readonly IFacultiesRepository _facultiesService = new FacultiesRepository();
         private static readonly ISpecialtiesRepository _specialtiesService = new SpecialtiesRepository();
         private static readonly ITimeTableRepository _timeTableService = new TimeTablesRepository();
-        private static readonly IUniversitiesRepository _universitiesService = new UniversitiesRepository();
-        private static readonly IUsersRepository _usersService = new UsersRepository();
 
         public static void Pars()
         {
@@ -37,38 +33,38 @@ namespace TelegramAPI.Helpers.Parser
             var url = "http://m.raspisanie.asu.edu.ru//student/faculty";
             HttpClient httpClient = new();
             var result = httpClient.PostAsync(url, new StringContent("")).Result;
-            var resultContent = result.Content.ReadAsStringAsync();
+            var resultContent = result.Content.ReadAsStringAsync().Result;
             var timeTable = JsonSerializer.Deserialize<Facul>("{\"q\":" + resultContent + "}");
-            foreach (MyItem i in timeTable.Q)
+            foreach (MyItem i in timeTable.q)
             {
-                var idF = _facultiesService.Create(new Faculties { Name = i.Name.Replace(",", ""), University = "617477bee3592a8c4fe4458f" }).Result;
+                var idF = _facultiesService.CreateOrUpdate(new Faculties { Name = i.name.Replace(",", ""), University = "617477bee3592a8c4fe4458f" }).Result;
                 MultipartFormDataContent form = new();
-                form.Add(new StringContent(i.Id), "id_spec");
+                form.Add(new StringContent(i.id), "id_spec");
                 HttpResponseMessage response = httpClient.PostAsync("http://m.raspisanie.asu.edu.ru//student/specialty", form).Result;
-                var responseContent = response.Content.ReadAsStringAsync();
+                var responseContent = response.Content.ReadAsStringAsync().Result;
                 var speciality = JsonSerializer.Deserialize<Facul>("{\"q\":" + responseContent + "}");
-                foreach (MyItem j in speciality.Q)
+                foreach (MyItem j in speciality.q)
                 {
-                    var spec = j.Name[..8] + " " + j.Name.Substring(j.Name.LastIndexOf("(") + 1, 3);
-                    if (j.Name.IndexOf("\"") != -1)
+                    var spec = j.name[..8] + " " + j.name.Substring(j.name.LastIndexOf("(") + 1, 3);
+                    if (j.name.IndexOf("\"") != -1)
                     {
-                        spec += " " + j.Name[(j.Name.IndexOf("\"") + 1)..j.Name.LastIndexOf("\"")].Replace(",", "");
+                        spec += " " + j.name[(j.name.IndexOf("\"") + 1)..j.name.LastIndexOf("\"")].Replace(",", "");
                     }
 
-                    var idS = _specialtiesService.Create(new Specialties { Name = spec, Facylty = idF }).Result;
+                    var idS = _specialtiesService.CreateOrUpdate(new Specialties { Name = spec, Facylty = idF }).Result;
                     form = new MultipartFormDataContent
                     {
-                        { new StringContent(j.Id), "val_spec" }
+                        { new StringContent(j.id), "val_spec" }
                     };
                     HttpResponseMessage responseKurs = httpClient.PostAsync("http://m.raspisanie.asu.edu.ru//student/kurs", form).Result;
                     var responseContentKurs = responseKurs.Content.ReadAsStringAsync().Result;
                     var kurs = JsonSerializer.Deserialize<Facul>("{\"s\":" + responseContentKurs + "}");
-                    foreach (Kurs z in kurs.S)
+                    foreach (Kurs z in kurs.s)
                     {
                         form = new MultipartFormDataContent
                         {
-                            { new StringContent(j.Id), "val_spec" },
-                            { new StringContent(z.Kurses), "kurs" }
+                            { new StringContent(j.id), "val_spec" },
+                            { new StringContent(z.kurs), "kurs" }
                         };
                         HttpResponseMessage responseGroup = httpClient.PostAsync("http://m.raspisanie.asu.edu.ru//student/grup", form).Result;
                         var responseContentGroup = responseGroup.Content.ReadAsStringAsync().Result;
@@ -150,13 +146,14 @@ namespace TelegramAPI.Helpers.Parser
                                     }
                                     weeks.Add(new WeekDTO { Days = dayCh, Number = 1 });
                                     weeks.Add(new WeekDTO { Days = dayZn, Number = 0 });
-                                    _timeTableService.Create(new TimeTable { Speciality = idS, Group = u, Weeks = weeks });
+                                    _timeTableService.CreateOrUpdate(new TimeTable { Speciality = idS, Group = u, Weeks = weeks });
                                 }
                             }
                         }
                     }
                 }
             }
+            Console.WriteLine("Обновление выполнено успешно");
         }
     }
 }

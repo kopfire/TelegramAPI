@@ -2,8 +2,8 @@
 {
     class Facul
     {
-        public MyItem[] Q { get; set; }
+        public MyItem[] q { get; set; }
 
-        public Kurs[] S { get; set; }
+        public Kurs[] s { get; set; }
     }
 }

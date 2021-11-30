@@ -2,7 +2,7 @@
 {
     class Kurs
     {
-        public string Kurses { get; set; }
+        public string kurs { get; set; }
 
     }
 }

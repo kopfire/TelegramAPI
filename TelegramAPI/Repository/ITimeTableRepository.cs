@@ -42,7 +42,14 @@ namespace TelegramAPI.Repository
         /// </summary>
         /// <param name="timeTables"></param>
         /// <returns></returns>
-        public Task Update(TimeTable timeTables); 
+        public Task Update(TimeTable timeTables);
+
+        /// <summary>
+        /// Добавление или обновление документа
+        /// </summary>
+        /// <param name="timeTables"></param>
+        /// <returns></returns>
+        public Task CreateOrUpdate(TimeTable timeTables);
 
         /// <summary>
         /// Удаление документа

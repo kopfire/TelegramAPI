@@ -24,6 +24,13 @@ namespace TelegramAPI.Repository
         public Task<string> Create(Faculties faculties);
 
         /// <summary>
+        /// Добавление или обновление документа
+        /// </summary>
+        /// <param name="faculties"></param>
+        /// <returns></returns>
+        public Task<string> CreateOrUpdate(Faculties faculties);
+
+        /// <summary>
         /// Обновление документа
         /// </summary>
         /// <param name="faculties"></param>

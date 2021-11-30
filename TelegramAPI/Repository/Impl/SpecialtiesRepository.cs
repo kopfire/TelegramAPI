@@ -23,12 +23,27 @@ namespace TelegramAPI.Repository.Impl
         {
             return await Specialties.Find(new BsonDocument("Facylty", new ObjectId(id))).ToListAsync();
         }
+        public async Task<Specialties> GetSpecialties(string id, string name)
+        {
+            var builder = new FilterDefinitionBuilder<Specialties>();
+            var filter = builder.Eq("Name", name) & builder.Eq("Facylty", new ObjectId(id));
+            return await Specialties.Find(filter).FirstOrDefaultAsync();
+        }
 
         /// <inheritdoc/>
         public async Task<string> Create(Specialties specialties)
         {
             await Specialties.InsertOneAsync(specialties);
             return specialties.Id;
+        }
+
+        /// <inheritdoc/>
+        public async Task<string> CreateOrUpdate(Specialties specialties)
+        {
+            var checkSpecialties = await GetSpecialties(specialties.Facylty, specialties.Name);
+            if (checkSpecialties != null)
+                return checkSpecialties.Id;
+            return await Create(specialties);
         }
 
         /// <inheritdoc/>

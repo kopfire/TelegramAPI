@@ -31,6 +31,13 @@ namespace TelegramAPI.Repository
         public Task Update(Specialties specialties);
 
         /// <summary>
+        /// Добавление или обновление документа
+        /// </summary>
+        /// <param name="specialties"></param>
+        /// <returns></returns>
+        public Task<string> CreateOrUpdate(Specialties specialties);
+
+        /// <summary>
         /// Удаление документа
         /// </summary>
         /// <param name="id">Идентификатор документа</param>

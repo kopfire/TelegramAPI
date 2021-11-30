@@ -35,6 +35,13 @@ namespace TelegramAPI.Repository.Impl
             return await TimeTables.FindAsync(new BsonDocument("_id", new ObjectId(id))).Result.FirstOrDefaultAsync();
         }
 
+        public async Task<TimeTable> GetTimeTable(string id, string name)
+        {
+            var builder = new FilterDefinitionBuilder<TimeTable>();
+            var filter = builder.Eq("Group", name) & builder.Eq("Speciality", new ObjectId(id));
+            return await TimeTables.Find(filter).FirstOrDefaultAsync();
+        }
+
         /// <inheritdoc/>
         public async Task Create(TimeTable timeTable)
         {
@@ -45,6 +52,16 @@ namespace TelegramAPI.Repository.Impl
         public async Task Update(TimeTable timeTable)
         {
             await TimeTables.ReplaceOneAsync(new BsonDocument("_id", new ObjectId(timeTable.Id)), timeTable);
+        }
+
+        /// <inheritdoc/>
+        public async Task CreateOrUpdate(TimeTable timeTable)
+        {
+            var checkTimeTable = await GetTimeTable(timeTable.Speciality, timeTable.Group);
+            if (checkTimeTable != null)
+                return;
+            await Create(timeTable);
+            return;
         }
 
         /// <inheritdoc/>
